@@ -12,19 +12,12 @@
             --text: #e0e0e0;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
+            margin: 1rem;
             line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
         }
 
         .container {
@@ -39,83 +32,70 @@
             font-size: 2.5rem;
         }
 
-        .dropdown-container {
+        .dropdown-group {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            margin: 3rem 0;
+            gap: 1rem;
+            margin: 2rem 0;
         }
 
         select {
-            padding: 15px;
+            padding: 12px;
             background: var(--card-bg);
-            color: var(--text);
-            border: 2px solid #3a3a3a;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            border: 2px solid #444;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
             width: 100%;
             appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff6b6b'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
             background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1.5em;
+            background-position: right 12px center;
         }
 
         #generateBtn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 18px 35px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.2rem;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 1.1rem;
             width: 100%;
-            max-width: 300px;
-            display: block;
-            margin: 2rem auto;
-            transition: transform 0.2s;
-        }
-
-        #generateBtn:hover {
-            transform: scale(1.05);
+            cursor: pointer;
+            margin: 1rem 0;
         }
 
         #output {
             background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 8px;
             margin-top: 2rem;
         }
 
-        #output h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-
-        #output li {
-            margin-bottom: 1rem;
-            padding-left: 1rem;
-            border-left: 3px solid var(--primary);
-        }
-
         @media (min-width: 768px) {
-            .dropdown-container {
+            .dropdown-group {
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
             }
             
             select {
-                width: 300px;
+                width: 250px;
+            }
+            
+            #generateBtn {
+                width: auto;
+                display: block;
+                margin: 2rem auto;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📜 Plotline Architect</h1>
+        <h1>📖 Plotline Architect</h1>
         
-        <div class="dropdown-container">
+        <div class="dropdown-group">
             <select id="genre">
                 <option value="">Choose Genre</option>
                 <option>Sci-Fi</option>
@@ -139,6 +119,7 @@
         <div id="output"></div>
     </div>
 
+    <!-- CORRECT FILE NAMES -->
     <script src="plotlib.js"></script>
     <script src="logic.js"></script>
 </body>
