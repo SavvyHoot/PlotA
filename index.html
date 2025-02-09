@@ -12,13 +12,19 @@
             --text: #e0e0e0;
         }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg);
             color: var(--text);
-            margin: 0;
-            padding: 20px;
             line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
         }
 
         .container {
@@ -29,86 +35,89 @@
         h1 {
             color: var(--primary);
             text-align: center;
-            margin: 1rem 0;
-            font-size: 2rem;
+            margin: 2rem 0;
+            font-size: 2.5rem;
         }
 
-        .dropdowns {
+        .dropdown-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin: 2rem 0;
+            gap: 1.5rem;
+            margin: 3rem 0;
         }
 
         select {
-            padding: 12px;
+            padding: 15px;
             background: var(--card-bg);
             color: var(--text);
             border: 2px solid #3a3a3a;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 1.1rem;
             width: 100%;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff6b6b'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
         }
 
         #generateBtn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
+            padding: 18px 35px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             width: 100%;
+            max-width: 300px;
+            display: block;
+            margin: 2rem auto;
             transition: transform 0.2s;
         }
 
         #generateBtn:hover {
-            transform: scale(1.02);
+            transform: scale(1.05);
         }
 
         #output {
             background: var(--card-bg);
-            padding: 25px;
-            border-radius: 8px;
+            padding: 2rem;
+            border-radius: 10px;
             margin-top: 2rem;
         }
 
         #output h2 {
             color: var(--primary);
-            margin-top: 0;
-        }
-
-        #output ul {
-            padding-left: 20px;
+            margin-bottom: 1.5rem;
         }
 
         #output li {
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 3px solid var(--primary);
         }
 
         @media (min-width: 768px) {
-            .dropdowns {
+            .dropdown-container {
                 flex-direction: row;
-                justify-content: space-between;
+                flex-wrap: wrap;
+                justify-content: center;
             }
+            
             select {
-                width: 30%;
-            }
-            #generateBtn {
-                width: auto;
-                display: block;
-                margin: 0 auto;
+                width: 300px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📖 Plotline Architect</h1>
+        <h1>📜 Plotline Architect</h1>
         
-        <div class="dropdowns">
+        <div class="dropdown-container">
             <select id="genre">
-                <option value="">Select Genre</option>
+                <option value="">Choose Genre</option>
                 <option>Sci-Fi</option>
                 <option>Fantasy</option>
                 <option>Mystery</option>
@@ -117,15 +126,15 @@
             </select>
 
             <select id="conflict">
-                <option value="">Select Conflict</option>
+                <option value="">Choose Conflict</option>
             </select>
 
             <select id="flaw">
-                <option value="">Select Flaw</option>
+                <option value="">Choose Flaw</option>
             </select>
         </div>
 
-        <button id="generateBtn">✨ Generate Plotline</button>
+        <button id="generateBtn">✨ Generate Story Outline</button>
 
         <div id="output"></div>
     </div>
