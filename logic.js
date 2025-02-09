@@ -5,33 +5,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateBtn = document.getElementById('generateBtn');
     const outputDiv = document.getElementById('output');
 
-    // Populate conflicts based on genre
+    // Clear other dropdowns when genre changes
     genreSelect.addEventListener('change', () => {
-        const genre = genreSelect.value;
-        conflictSelect.innerHTML = '<option value="">Select Conflict</option>';
-        flawSelect.innerHTML = '<option value="">Select Flaw</option>';
+        conflictSelect.innerHTML = '<option value="">Choose Conflict</option>';
+        flawSelect.innerHTML = '<option value="">Choose Flaw</option>';
+        outputDiv.innerHTML = '';
 
-        if (genre && plotLibrary[genre]) {
-            Object.keys(plotLibrary[genre].conflicts).forEach(conflict => {
+        if (genreSelect.value && plotLibrary[genreSelect.value]) {
+            // Populate conflicts
+            Object.keys(plotLibrary[genreSelect.value].conflicts).forEach(conflict => {
                 conflictSelect.add(new Option(conflict, conflict));
             });
         }
     });
 
-    // Populate flaws based on conflict
+    // Populate flaws when conflict changes
     conflictSelect.addEventListener('change', () => {
-        const genre = genreSelect.value;
-        const conflict = conflictSelect.value;
-        flawSelect.innerHTML = '<option value="">Select Flaw</option>';
+        flawSelect.innerHTML = '<option value="">Choose Flaw</option>';
+        outputDiv.innerHTML = '';
 
-        if (genre && conflict && plotLibrary[genre]?.conflicts[conflict]) {
-            Object.keys(plotLibrary[genre].conflicts[conflict]).forEach(flaw => {
-                flawSelect.add(new Option(flaw, flaw));
-            });
+        if (genreSelect.value && conflictSelect.value) {
+            const flaws = plotLibrary[genreSelect.value]?.conflicts[conflictSelect.value];
+            if (flaws) {
+                Object.keys(flaws).forEach(flaw => {
+                    flawSelect.add(new Option(flaw, flaw));
+                });
+            }
         }
     });
 
-    // Generate plotline
+    // Generate plot
     generateBtn.addEventListener('click', () => {
         const genre = genreSelect.value;
         const conflict = conflictSelect.value;
@@ -48,11 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (plot) {
             outputDiv.innerHTML = `
-                <h2>${genre} Plotline: ${conflict}</h2>
+                <h2>${genre} Story Outline: ${conflict}</h2>
                 <ul>${plot.map(beat => `<li>${beat}</li>`).join('')}</ul>
             `;
         } else {
-            outputDiv.innerHTML = '<p>No plot found for these selections. Try another combination!</p>';
+            outputDiv.innerHTML = '<p>No outline found for these selections. Try another combination!</p>';
         }
     });
 });
