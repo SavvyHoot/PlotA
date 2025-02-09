@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Plotline Architect</title>
     <style>
         :root {
@@ -16,33 +16,27 @@
             font-family: 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
-            margin: 2rem;
+            margin: 1rem;
             line-height: 1.6;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
+            padding: 10px;
         }
 
         h1 {
             color: var(--primary);
             text-align: center;
-            margin-bottom: 2rem;
+            margin: 1rem 0;
+            font-size: 1.8rem;
         }
 
         .dropdowns {
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        @media (min-width: 768px) {
-            .dropdowns {
-                flex-direction: row;
-                justify-content: space-between;
-            }
         }
 
         select {
@@ -53,6 +47,7 @@
             border-radius: 8px;
             font-size: 16px;
             width: 100%;
+            -webkit-appearance: none;
         }
 
         #generateBtn {
@@ -64,19 +59,16 @@
             cursor: pointer;
             display: block;
             margin: 20px auto;
-            font-size: 18px;
-            transition: opacity 0.3s;
-        }
-
-        #generateBtn:hover {
-            opacity: 0.9;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
         }
 
         #output {
             background: var(--card-bg);
             padding: 20px;
             border-radius: 8px;
-            margin-top: 2rem;
+            margin-top: 1rem;
         }
 
         #output h3 {
@@ -90,6 +82,20 @@
 
         #output li {
             margin-bottom: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .dropdowns {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            select {
+                width: auto;
+                min-width: 200px;
+            }
+            #generateBtn {
+                width: auto;
+            }
         }
     </style>
 </head>
@@ -121,8 +127,8 @@
         <div id="output"></div>
     </div>
 
-    <!-- Load JavaScript files -->
-    <script src="plotl.js"></script> <!-- Data first! -->
-    <script src="logic.js"></script> <!-- Logic second -->
+    <!-- Correct file names -->
+    <script src="plotlib.js"></script>
+    <script src="logic.js"></script>
 </body>
 </html>
