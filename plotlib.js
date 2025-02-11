@@ -7,6 +7,13 @@ const plotLibrary = {
                 "Perfectionism": ["Act 1: Create flawless AI", "Midpoint: AI rejects imperfect humans", "Climax: Introduce controlled chaos"],
                 "Isolation": ["Act 1: Solo mission with AI companion", "Midpoint: AI hides Earth's destruction", "Climax: Choose digital afterlife"],
                 "Trust Issues": ["Act 1: Security chief suspects AI", "Midpoint: AI frames human", "Climax: Prove innocence pre-purge"]
+            },
+            "Alien Invasion": {
+                "Fear": ["Act 1: First contact", "Midpoint: Mass panic", "Climax: Fight or flight"],
+                "Curiosity": ["Act 1: Signal discovery", "Midpoint: Alien encounter", "Climax: Mutual understanding"],
+                "Survival": ["Act 1: Alien attack", "Midpoint: Resource scarcity", "Climax: Final stand"],
+                "Revenge": ["Act 1: Past invasion", "Midpoint: Discovery of alien weakness", "Climax: Retaliation"],
+                "Deception": ["Act 1: Friendly aliens", "Midpoint: Hidden agenda revealed", "Climax: Betrayal and battle"]
             }
         }
     },
@@ -36,6 +43,13 @@ const plotLibrary = {
                 "Guilt": ["Act 1: Security lapse", "Midpoint: Family connection", "Climax: Redemption choice"],
                 "Revenge": ["Act 1: Artist's scheme", "Midpoint: Real thieves strike", "Climax: Unlikely alliance"],
                 "Curiosity": ["Act 1: Hidden clue found", "Midpoint: Treasure map revealed", "Climax: Race against time"]
+            },
+            "Murder Mystery": {
+                "Revenge": ["Act 1: Victim found", "Midpoint: Suspect discovered", "Climax: True culprit revealed"],
+                "Jealousy": ["Act 1: Love triangle", "Midpoint: Affair uncovered", "Climax: Murderer confesses"],
+                "Greed": ["Act 1: Inheritance dispute", "Midpoint: Hidden will found", "Climax: Killer apprehended"],
+                "Curiosity": ["Act 1: Strange death", "Midpoint: Detective investigation", "Climax: Mystery solved"],
+                "Fear": ["Act 1: Serial killer on loose", "Midpoint: Close call", "Climax: Final confrontation"]
             }
         }
     },
@@ -47,6 +61,13 @@ const plotLibrary = {
                 "Denial": ["Act 1: New owner ignores warnings", "Midpoint: Staff disappearances", "Climax: Patient manifest appears"],
                 "Fear": ["Act 1: Night guard job", "Midpoint: Voices name sins", "Climax: Childhood trauma confrontation"],
                 "Curiosity": ["Act 1: Historical research", "Midpoint: Sleepwalking episodes", "Climax: Permanent resident"]
+            },
+            "Zombie Outbreak": {
+                "Survival": ["Act 1: Outbreak starts", "Midpoint: Safe haven found", "Climax: Final escape"],
+                "Fear": ["Act 1: Zombies attack", "Midpoint: Loved one infected", "Climax: Overcoming fear"],
+                "Betrayal": ["Act 1: Group forms", "Midpoint: Trust broken", "Climax: Betrayer dealt with"],
+                "Isolation": ["Act 1: Alone in city", "Midpoint: Find survivors", "Climax: Rejoin society"],
+                "Sacrifice": ["Act 1: Sacrifice for group", "Midpoint: Hard choices", "Climax: Ultimate sacrifice"]
             }
         }
     },
@@ -58,6 +79,13 @@ const plotLibrary = {
                 "Ambition": ["Act 1: Fame arrangement", "Midpoint: Real feelings emerge", "Climax: Career vs love"],
                 "Insecurity": ["Act 1: Perfect partner", "Midpoint: Flaws revealed", "Climax: Embrace reality"],
                 "Loyalty": ["Act 1: Make ex jealous", "Midpoint: Ex returns", "Climax: New love choice"]
+            },
+            "Office Romance": {
+                "Secrecy": ["Act 1: Workplace attraction", "Midpoint: Relationship hidden", "Climax: Decision to go public"],
+                "Competition": ["Act 1: Rival colleagues", "Midpoint: Love amidst rivalry", "Climax: Choose love or career"],
+                "Misunderstandings": ["Act 1: Mixed signals", "Midpoint: Misunderstanding escalates", "Climax: Clear the air"],
+                "Past Relationships": ["Act 1: Ex returns", "Midpoint: Old feelings resurface", "Climax: Choose past or present"],
+                "Jealousy": ["Act 1: Office flirt", "Midpoint: Jealousy causes rift", "Climax: Reaffirm commitment"]
             }
         }
     }
