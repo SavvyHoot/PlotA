@@ -18,6 +18,13 @@ const plotLibrary = {
                 "Compassion": ["Act 1: Help injured dragon", "Midpoint: Village outrage", "Climax: Dragon protector"],
                 "Deceit": ["Act 1: Fake dragon attacks", "Midpoint: Real dragon appears", "Climax: United defense"],
                 "Tradition": ["Act 1: Ancient sacrifice pact", "Midpoint: Dragon demands change", "Climax: New treaty"]
+            },
+            "Royal Betrayal": {
+                "Loyalty": ["Act 1: Sworn to protect", "Midpoint: Betrayal discovered", "Climax: Choose between duty and love"],
+                "Ambition": ["Act 1: Seeks throne", "Midpoint: Alliance with enemy", "Climax: Betrayal and victory"],
+                "Love": ["Act 1: Secret affair", "Midpoint: Forbidden love revealed", "Climax: Sacrifice for love"],
+                "Deceit": ["Act 1: Hidden agenda", "Midpoint: Lies uncovered", "Climax: Truth prevails"],
+                "Fear": ["Act 1: Fear of failure", "Midpoint: Overcome fears", "Climax: Triumph against odds"]
             }
         }
     },
