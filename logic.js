@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const conflicts = Object.keys(plotLibrary[genre].conflicts);
             console.log('Conflicts available for', genre, ':', conflicts);
             conflicts.forEach(conflict => {
+                console.log('Adding conflict option:', conflict);
                 conflictSelect.add(new Option(conflict, conflict));
             });
         }
@@ -43,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const flaws = Object.keys(plotLibrary[genre].conflicts[conflict]);
             console.log('Flaws available for', conflict, ':', flaws);
             flaws.forEach(flaw => {
+                console.log('Adding flaw option:', flaw);
                 flawSelect.add(new Option(flaw, flaw));
             });
         }
