@@ -7,13 +7,6 @@ const plotLibrary = {
                 "Perfectionism": ["Act 1: Create flawless AI", "Midpoint: AI rejects imperfect humans", "Climax: Introduce controlled chaos"],
                 "Isolation": ["Act 1: Solo mission with AI companion", "Midpoint: AI hides Earth's destruction", "Climax: Choose digital afterlife"],
                 "Trust Issues": ["Act 1: Security chief suspects AI", "Midpoint: AI frames human", "Climax: Prove innocence pre-purge"]
-            },
-            "First Contact": {
-                "Curiosity": ["Act 1: Decode alien signal", "Midpoint: Alien civil war revealed", "Climax: Prevent human aggression"],
-                "Xenophobia": ["Act 1: Colony rejects aliens", "Midpoint: Aliens save colony", "Climax: Cultural exchange"],
-                "Idealism": ["Act 1: Believe aliens peaceful", "Midpoint: Tech causes mutations", "Climax: Containment sacrifice"],
-                "Skepticism": ["Act 1: Investigate 'fake' contact", "Midpoint: Government cover-up", "Climax: Public broadcast"],
-                "Loyalty": ["Act 1: Soldier ordered to attack", "Midpoint: Alien connection formed", "Climax: Defy orders"]
             }
         }
     },
