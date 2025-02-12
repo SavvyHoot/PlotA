@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Populate conflicts
             const conflicts = Object.keys(plotLibrary[genre].conflicts);
             console.log('Conflicts available for', genre, ':', conflicts);
+            console.log('Total conflicts for', genre, ':', conflicts.length);
             conflicts.forEach(conflict => {
                 console.log('Adding conflict option:', conflict);
                 conflictSelect.add(new Option(conflict, conflict));
