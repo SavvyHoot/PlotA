@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log('DOM fully loaded and parsed');
 
+    // Verify if plotLibrary is loaded
+    console.log('plotLibrary:', plotLibrary);
+
     // Clear and populate conflicts when genre changes
     genreSelect.addEventListener('change', () => {
         const genre = genreSelect.value;
@@ -27,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Adding conflict option:', conflict);
                 conflictSelect.add(new Option(conflict, conflict));
             });
+        } else {
+            console.log('No conflicts found for genre:', genre);
         }
     });
 
@@ -48,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Adding flaw option:', flaw);
                 flawSelect.add(new Option(flaw, flaw));
             });
+        } else {
+            console.log('No flaws found for conflict:', conflict);
         }
     });
 
