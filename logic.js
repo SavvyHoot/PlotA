@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         flawSelect.innerHTML = '<option value="">Choose Flaw</option>';
         outputDiv.innerHTML = '';
 
+        // Additional check for plotLibrary[genre]
         if (genre && plotLibrary[genre]) {
             // Confirm accessing plotLibrary[genre]
             console.log('Accessing plotLibrary[genre]:', plotLibrary[genre]);
