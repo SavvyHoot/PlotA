@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
         outputDiv.innerHTML = '';
 
         if (genre && plotLibrary[genre]) {
+            // Confirm accessing plotLibrary[genre]
+            console.log('Accessing plotLibrary[genre]:', plotLibrary[genre]);
+
             // Populate conflicts
             const conflicts = Object.keys(plotLibrary[genre].conflicts);
             console.log('Conflicts available for', genre, ':', conflicts);
