@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-ancestors 'none';">
     <title>Plotline Architect</title>
     <style>
         :root {
@@ -80,11 +78,11 @@
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            
+
             select {
                 width: 250px;
             }
-            
+
             #generateBtn {
                 width: auto;
                 display: block;
@@ -96,7 +94,6 @@
 <body>
     <div class="container">
         <h1>📖 Plotline Architect</h1>
-        
         <div class="dropdown-group">
             <select id="genre" title="Genre">
                 <option value="">Choose Genre</option>
@@ -106,21 +103,16 @@
                 <option>Horror</option>
                 <option>Romance</option>
             </select>
-
             <select id="conflict" title="Conflict">
                 <option value="">Choose Conflict</option>
             </select>
-
             <select id="flaw" title="Flaw">
                 <option value="">Choose Flaw</option>
             </select>
         </div>
-
         <button id="generateBtn">✨ Generate Story Outline</button>
-
         <div id="output"></div>
     </div>
-
     <!-- Load JavaScript files -->
     <script src="plotlib.js"></script>
     <script src="logic.js"></script>
