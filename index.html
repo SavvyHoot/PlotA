@@ -10,68 +10,68 @@
             background: #1a1a3d;
             color: #fff;
             margin: 0;
-            padding: 5px; /* Minimal padding */
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            padding: 10px;
+            overflow-x: hidden;
         }
         .container {
-            width: 100%; /* Always full width */
-            max-width: 600px; /* Cap for desktop */
+            width: 100%;
+            max-width: 900px; /* Wider for desktop */
             margin: 0 auto;
             text-align: center;
             box-sizing: border-box;
         }
         h1 {
-            font-size: clamp(1.2em, 4vw, 2.5em);
+            font-size: clamp(1.5em, 5vw, 2.5em); /* Bigger on desktop */
             color: #ffcc00;
             text-shadow: 2px 2px #ff6b6b;
-            margin: 10px 0;
+            margin: 15px 0;
         }
         h2 {
-            font-size: clamp(1em, 3.5vw, 2em);
+            font-size: clamp(1.2em, 4vw, 2em);
             color: #00cc00;
-            margin: 15px 0;
+            margin: 20px 0;
             text-shadow: 1px 1px #ff6b6b;
         }
         .dropdown-group, .definition-group {
             display: flex;
-            flex-direction: column; /* Stack by default */
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
-            margin: 10px 0;
+            gap: 10px;
+            margin: 15px 0;
             width: 100%;
             visibility: visible !important;
         }
         select {
-            padding: 6px;
-            font-size: clamp(0.8em, 2.5vw, 1em);
-            border: 2px solid #ff6b6b;
-            border-radius: 8px;
+            padding: 8px;
+            font-size: clamp(0.9em, 3vw, 1.2em);
+            border: 3px solid #ff6b6b;
+            border-radius: 10px;
             background: #fff;
             color: #1a1a3d;
             cursor: pointer;
             width: 100%;
-            max-width: 100%; /* No cap, full width */
+            max-width: 100%;
             box-sizing: border-box;
         }
         .button-group {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            margin: 10px 0;
+            gap: 10px;
+            margin: 15px 0;
             width: 100%;
         }
         button {
-            padding: 8px 12px;
-            font-size: clamp(0.8em, 2.5vw, 1em);
+            padding: 10px 15px;
+            font-size: clamp(0.9em, 3vw, 1.2em);
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             background: #00cc00;
             color: #fff;
             cursor: pointer;
             transition: background 0.3s;
             width: 100%;
-            max-width: 200px; /* Smaller buttons */
+            max-width: 180px;
             box-sizing: border-box;
         }
         button:hover {
@@ -80,22 +80,22 @@
         #output, #definitionOutput {
             background: #fff;
             color: #1a1a3d;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-            margin: 10px 0;
-            font-size: clamp(0.8em, 2.5vw, 1em);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin: 15px 0;
+            font-size: clamp(0.9em, 3vw, 1.1em);
             width: 100%;
             box-sizing: border-box;
             visibility: visible !important;
         }
         #output h2, #definitionOutput h3 {
             color: #ffcc00;
-            margin: 5px 0;
-            font-size: clamp(1em, 3vw, 1.5em);
+            margin: 10px 0;
+            font-size: clamp(1.1em, 3.5vw, 1.5em);
         }
         #output p, #definitionOutput p {
-            line-height: 1.4;
+            line-height: 1.5;
             margin: 5px 0;
         }
         #definitionOutput a {
@@ -104,19 +104,19 @@
         }
         @media (min-width: 600px) {
             .dropdown-group, .definition-group, .button-group {
-                flex-direction: row; /* Horizontal on desktop */
+                flex-direction: row;
                 justify-content: center;
             }
             select {
                 width: auto;
-                max-width: 200px;
+                max-width: 250px; /* Wider on desktop */
             }
             button {
                 width: auto;
-                max-width: 150px;
+                max-width: 200px;
             }
             .container {
-                max-width: 800px;
+                padding: 20px;
             }
         }
     </style>
@@ -473,4 +473,38 @@
                 if (genre && conflict && flaw) {
                     const text = `My wild plot from narrativemethods.com: ${genre} - ${conflict} (${flaw})! Try it at https://narrativemethods.com!`;
                     navigator.clipboard.writeText(text);
-                    outputDiv.innerHTML += '<p style="color
+                    outputDiv.innerHTML += '<p style="color: #00cc00">✅ Copied to clipboard—share the madness!</p>';
+                } else {
+                    outputDiv.innerHTML += '<p style="color: #ff6b6b">⚠️ Generate a plot first!</p>';
+                }
+            });
+
+            const termSelect = document.getElementById('term');
+            const defineBtn = document.getElementById('defineBtn');
+            const randomTermBtn = document.getElementById('randomTermBtn');
+            const definitionOutput = document.getElementById('definitionOutput');
+
+            defineBtn.addEventListener('click', () => {
+                const term = termSelect.value;
+                if (term && storyDefinitions[term]) {
+                    definitionOutput.innerHTML = `
+                        <h3>${term}</h3>
+                        <p><strong>What it is:</strong> ${storyDefinitions[term].def}</p>
+                        <p><strong>Example:</strong> ${storyDefinitions[term].example}</p>
+                        <p><a href="#" onclick="document.getElementById('genre').focus(); return false;">Try it in the Plotline Architect!</a></p>
+                    `;
+                } else {
+                    definitionOutput.innerHTML = '<p style="color: #ff6b6b">⚠️ Pick a term first, story wizard!</p>';
+                }
+            });
+
+            randomTermBtn.addEventListener('click', () => {
+                const terms = Object.keys(storyDefinitions);
+                const randomTerm = terms[Math.floor(Math.random() * terms.length)];
+                termSelect.value = randomTerm;
+                defineBtn.click();
+            });
+        });
+    </script>
+</body>
+</html>
