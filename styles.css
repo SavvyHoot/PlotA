@@ -1,57 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plotline Architect</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>📖 Plotline Architect: Unleash Your Story!</h1>
-        <div class="dropdown-group">
-            <select id="genre" title="Genre">
-                <option value="">Choose Genre</option>
-                <option>Sci-Fi</option>
-                <option>Fantasy</option>
-                <option>Mystery</option>
-                <option>Horror</option>
-                <option>Romance</option>
-            </select>
-            <select id="conflict" title="Conflict">
-                <option value="">Choose Conflict</option>
-            </select>
-            <select id="flaw" title="Flaw">
-                <option value="">Choose Flaw</option>
-            </select>
-        </div>
-        <div class="button-group">
-            <button id="generateBtn">✨ Generate Story Outline</button>
-            <button id="randomBtn">🎲 Surprise Me!</button>
-            <button id="shareBtn">📤 Share Plot</button>
-        </div>
-        <div id="output"></div>
+body {
+    font-family: 'Comic Sans MS', 'Arial', sans-serif;
+    background: #1a1a3d;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+}
 
-        <!-- Plot Definition Tool -->
-        <h2>🧠 Plot Definition Tool</h2>
-        <div class="definition-group">
-            <select id="term" title="Story Term">
-                <option value="">Pick a Term</option>
-                <option>Protagonist</option>
-                <option>Antagonist</option>
-                <option>Conflict</option>
-                <option>Climax</option>
-                <option>Plot</option>
-                <option>Setting</option>
-                <option>Theme</option>
-            </select>
-            <button id="defineBtn">📚 Define It!</button>
-            <button id="randomTermBtn">🎯 Random Term</button>
-        </div>
-        <div id="definitionOutput"></div>
-    </div>
-    <script src="plotlib.js"></script>
-    <script src="definitions.js"></script>
-    <script src="logic.js"></script>
-</body>
-</html>
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #ffcc00;
+    text-shadow: 2px 2px #ff6b6b;
+}
+
+h2 {
+    font-size: 2em;
+    color: #00cc00;
+    margin-top: 40px;
+    text-shadow: 1px 1px #ff6b6b;
+}
+
+.dropdown-group, .definition-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+select {
+    padding: 10px;
+    font-size: 1.1em;
+    border: 3px solid #ff6b6b;
+    border-radius: 10px;
+    background: #fff;
+    color: #1a1a3d;
+    cursor: pointer;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 15px;
+    background: #00cc00;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+
+button:hover {
+    background: #ff6b6b;
+    transform: scale(1.1);
+}
+
+#output, #definitionOutput {
+    background: #fff;
+    color: #1a1a3d;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    font-size: 1.1em;
+}
+
+#output h2, #definitionOutput h3 {
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+#output p, #definitionOutput p {
+    line-height: 1.5;
+}
+
+#definitionOutput a {
+    color: #ff6b6b;
+    text-decoration: underline;
+}
