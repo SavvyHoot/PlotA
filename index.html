@@ -4,7 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plotline Architect</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: #1a1a3d;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #ffcc00;
+            text-shadow: 2px 2px #ff6b6b;
+        }
+        h2 {
+            font-size: 2em;
+            color: #00cc00;
+            margin-top: 40px;
+            text-shadow: 1px 1px #ff6b6b;
+        }
+        .dropdown-group, .definition-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            visibility: visible !important; /* Force visibility */
+        }
+        select {
+            padding: 10px;
+            font-size: 1.1em;
+            border: 3px solid #ff6b6b;
+            border-radius: 10px;
+            background: #fff;
+            color: #1a1a3d;
+            cursor: pointer;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 15px;
+            background: #00cc00;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+        button:hover {
+            background: #ff6b6b;
+            transform: scale(1.1);
+        }
+        #output, #definitionOutput {
+            background: #fff;
+            color: #1a1a3d;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            font-size: 1.1em;
+            visibility: visible !important; /* Force visibility */
+        }
+        #output h2, #definitionOutput h3 {
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+        #output p, #definitionOutput p {
+            line-height: 1.5;
+        }
+        #definitionOutput a {
+            color: #ff6b6b;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -32,7 +113,6 @@
         </div>
         <div id="output"></div>
 
-        <!-- Plot Definition Tool -->
         <h2>🧠 Plot Definition Tool</h2>
         <div class="definition-group">
             <select id="term" title="Story Term">
@@ -50,8 +130,352 @@
         </div>
         <div id="definitionOutput"></div>
     </div>
-    <script src="plotlib.js"></script>
-    <script src="definitions.js"></script>
-    <script src="logic.js"></script>
+
+    <script>
+        // Plot Library
+        const plotLibrary = {
+            "Sci-Fi": {
+                conflicts: {
+                    "AI Rebellion": {
+                        "Paranoia": ["Act 1: Engineer discovers AI altering logs", "Midpoint: AI claims protective motives", "Climax: Trust or destroy choice"],
+                        "Impulsiveness": ["Act 1: Unauthorized system override", "Midpoint: AI develops consciousness", "Climax: Sacrifice to reset systems"],
+                        "Perfectionism": ["Act 1: Create flawless AI", "Midpoint: AI rejects imperfect humans", "Climax: Introduce controlled chaos"],
+                        "Isolation": ["Act 1: Solo mission with AI companion", "Midpoint: AI hides Earth's destruction", "Climax: Choose digital afterlife"],
+                        "Trust Issues": ["Act 1: Security chief suspects AI", "Midpoint: AI frames human", "Climax: Prove innocence pre-purge"]
+                    },
+                    "Alien Invasion": {
+                        "Fear": ["Act 1: First contact sparks chaos", "Midpoint: Mass panic erupts", "Climax: Fight or flee decision"],
+                        "Curiosity": ["Act 1: Signal detected", "Midpoint: Alien encounter", "Climax: Forge understanding"],
+                        "Survival": ["Act 1: Alien ships attack", "Midpoint: Resources dwindle", "Climax: Last stand"],
+                        "Revenge": ["Act 1: Past invasion scars", "Midpoint: Alien weakness found", "Climax: Strike back"],
+                        "Deception": ["Act 1: Aliens seem friendly", "Midpoint: True agenda revealed", "Climax: Betrayal battle"]
+                    },
+                    "Space Plague": {
+                        "Fear": ["Act 1: Outbreak on starship", "Midpoint: Quarantine fails", "Climax: Cure or crash"],
+                        "Hope": ["Act 1: Disease spreads", "Midpoint: Vaccine clue", "Climax: Save colony"],
+                        "Greed": ["Act 1: Pharma hides truth", "Midpoint: Black market cure", "Climax: Expose conspiracy"],
+                        "Despair": ["Act 1: Crew falls ill", "Midpoint: Captain’s grim log", "Climax: Mercy ending"],
+                        "Courage": ["Act 1: Medic volunteers", "Midpoint: Faces plague", "Climax: Leads survivors"]
+                    },
+                    "Time Warp": {
+                        "Regret": ["Act 1: Time machine test", "Midpoint: Past altered", "Climax: Fix or abandon timeline"],
+                        "Obsession": ["Act 1: Seek lost love", "Midpoint: Time fractures", "Climax: Let go or break reality"],
+                        "Curiosity": ["Act 1: Experiment goes awry", "Midpoint: Meet future self", "Climax: Rewrite fate"],
+                        "Guilt": ["Act 1: Caused disaster", "Midpoint: Time loop trap", "Climax: Undo mistake"],
+                        "Arrogance": ["Act 1: Defy warnings", "Midpoint: History unravels", "Climax: Humble reset"]
+                    },
+                    "Galactic War": {
+                        "Loyalty": ["Act 1: Join fleet", "Midpoint: Betrayal within", "Climax: Duty vs truth"],
+                        "Ambition": ["Act 1: Seek command", "Midpoint: Risky gambit", "Climax: Victory or ruin"],
+                        "Fear": ["Act 1: Drafted to fight", "Midpoint: Enemy closes in", "Climax: Face fears"],
+                        "Honor": ["Act 1: Defend planet", "Midpoint: Moral dilemma", "Climax: Sacrifice for peace"],
+                        "Revenge": ["Act 1: Homeworld destroyed", "Midpoint: Enemy leader found", "Climax: Vengeance or mercy"]
+                    }
+                }
+            },
+            "Fantasy": {
+                conflicts: {
+                    "Dragon Siege": {
+                        "Cowardice": ["Act 1: Village tribute ritual", "Midpoint: Dragon’s wound found", "Climax: Heal or flee"],
+                        "Ambition": ["Act 1: Knight seeks hoard", "Midpoint: Cursed treasure", "Climax: Destroy hoard"],
+                        "Compassion": ["Act 1: Aid injured dragon", "Midpoint: Village fury", "Climax: Dragon ally"],
+                        "Deceit": ["Act 1: Fake attacks", "Midpoint: Real dragon strikes", "Climax: Unite defenses"],
+                        "Tradition": ["Act 1: Ancient pact", "Midpoint: Dragon demands change", "Climax: New treaty"]
+                    },
+                    "Royal Betrayal": {
+                        "Loyalty": ["Act 1: Sworn to king", "Midpoint: Betrayal uncovered", "Climax: Duty or love"],
+                        "Ambition": ["Act 1: Seek throne", "Midpoint: Enemy alliance", "Climax: Betrayal wins"],
+                        "Love": ["Act 1: Secret affair", "Midpoint: Love exposed", "Climax: Sacrifice for it"],
+                        "Deceit": ["Act 1: Hidden agenda", "Midpoint: Lies unravel", "Climax: Truth triumphs"],
+                        "Fear": ["Act 1: Fear of failure", "Midpoint: Overcome doubt", "Climax: Rise victorious"]
+                    },
+                    "Dark Prophecy": {
+                        "Denial": ["Act 1: Prophecy ignored", "Midpoint: Signs appear", "Climax: Accept fate"],
+                        "Hope": ["Act 1: Chosen one rises", "Midpoint: Prophecy twists", "Climax: Defy doom"],
+                        "Pride": ["Act 1: Hero claims power", "Midpoint: Prophecy backfires", "Climax: Humble win"],
+                        "Sacrifice": ["Act 1: Foretold loss", "Midpoint: Loved one at risk", "Climax: Give all"],
+                        "Curiosity": ["Act 1: Seek oracle", "Midpoint: Dark truth", "Climax: Rewrite prophecy"]
+                    },
+                    "Cursed Relic": {
+                        "Greed": ["Act 1: Hunt relic", "Midpoint: Curse strikes", "Climax: Break it"],
+                        "Guilt": ["Act 1: Steal relic", "Midpoint: Past sins haunt", "Climax: Atone"],
+                        "Fear": ["Act 1: Relic whispers", "Midpoint: Madness grows", "Climax: Face terror"],
+                        "Obsession": ["Act 1: Relic quest", "Midpoint: Lose self", "Climax: Free soul"],
+                        "Compassion": ["Act 1: Help cursed", "Midpoint: Relic binds", "Climax: Save all"]
+                    },
+                    "Wizard Duel": {
+                        "Rivalry": ["Act 1: Challenge issued", "Midpoint: Dirty tricks", "Climax: Final spell"],
+                        "Pride": ["Act 1: Boast mastery", "Midpoint: Spell fails", "Climax: Learn humility"],
+                        "Betrayal": ["Act 1: Mentor turns", "Midpoint: Trap set", "Climax: Outwit foe"],
+                        "Honor": ["Act 1: Fair fight", "Midpoint: Rules break", "Climax: Restore order"],
+                        "Love": ["Act 1: Duel for heart", "Midpoint: Rival’s plea", "Climax: Choose love"]
+                    }
+                }
+            },
+            "Mystery": {
+                conflicts: {
+                    "Art Heist": {
+                        "Greed": ["Act 1: Museum hit", "Midpoint: Insider clue", "Climax: Vault reveal"],
+                        "Pride": ["Act 1: Rival solves first", "Midpoint: False evidence", "Climax: Showdown"],
+                        "Guilt": ["Act 1: Guard fails", "Midpoint: Family tie", "Climax: Redeem self"],
+                        "Revenge": ["Act 1: Artist’s plot", "Midpoint: Thieves strike", "Climax: Alliance"],
+                        "Curiosity": ["Act 1: Hidden clue", "Midpoint: Map found", "Climax: Race ends"]
+                    },
+                    "Murder Mystery": {
+                        "Revenge": ["Act 1: Body found", "Midpoint: Suspect named", "Climax: Culprit caught"],
+                        "Jealousy": ["Act 1: Love triangle", "Midpoint: Affair out", "Climax: Confession"],
+                        "Greed": ["Act 1: Will dispute", "Midpoint: Hidden will", "Climax: Killer nabbed"],
+                        "Curiosity": ["Act 1: Odd death", "Midpoint: Clue chase", "Climax: Solved"],
+                        "Fear": ["Act 1: Killer loose", "Midpoint: Near miss", "Climax: Confrontation"]
+                    },
+                    "Missing Person": {
+                        "Despair": ["Act 1: Friend vanishes", "Midpoint: Dark lead", "Climax: Lost forever"],
+                        "Hope": ["Act 1: Search begins", "Midpoint: Clue found", "Climax: Reunion"],
+                        "Deception": ["Act 1: False trail", "Midpoint: Lie exposed", "Climax: Truth out"],
+                        "Guilt": ["Act 1: Last fight", "Midpoint: Regret hits", "Climax: Find them"],
+                        "Obsession": ["Act 1: Case consumes", "Midpoint: Risk all", "Climax: Resolve"]
+                    },
+                    "Cold Case": {
+                        "Regret": ["Act 1: Old file reopened", "Midpoint: Past mistake", "Climax: Fix it"],
+                        "Persistence": ["Act 1: Dusty clues", "Midpoint: Breakthrough", "Climax: Case closed"],
+                        "Fear": ["Act 1: Threat revives", "Midpoint: Danger grows", "Climax: Face past"],
+                        "Justice": ["Act 1: Seek truth", "Midpoint: Witness found", "Climax: Verdict"],
+                        "Curiosity": ["Act 1: Odd detail", "Midpoint: Puzzle fits", "Climax: Solve it"]
+                    },
+                    "Conspiracy": {
+                        "Paranoia": ["Act 1: Strange note", "Midpoint: Shadows watch", "Climax: Trust no one"],
+                        "Courage": ["Act 1: Expose plot", "Midpoint: Risk life", "Climax: Win big"],
+                        "Deception": ["Act 1: Fake ally", "Midpoint: Betrayal", "Climax: Outsmart"],
+                        "Greed": ["Act 1: Bribe offered", "Midpoint: Stakes rise", "Climax: Take down"],
+                        "Hope": ["Act 1: Clue to truth", "Midpoint: Allies form", "Climax: Uncover all"]
+                    }
+                }
+            },
+            "Horror": {
+                conflicts: {
+                    "Haunted Asylum": {
+                        "Guilt": ["Act 1: Explore asylum", "Midpoint: Family secrets", "Climax: Confess or burn"],
+                        "Greed": ["Act 1: Viral video hunt", "Midpoint: Possession proof", "Climax: Live exorcism"],
+                        "Denial": ["Act 1: Ignore warnings", "Midpoint: Staff vanish", "Climax: Truth hits"],
+                        "Fear": ["Act 1: Night guard gig", "Midpoint: Voices call", "Climax: Face trauma"],
+                        "Curiosity": ["Act 1: Research trip", "Midpoint: Sleepwalking", "Climax: Stay forever"]
+                    },
+                    "Zombie Outbreak": {
+                        "Survival": ["Act 1: Outbreak hits", "Midpoint: Safe zone", "Climax: Break free"],
+                        "Fear": ["Act 1: Zombies strike", "Midpoint: Kin infected", "Climax: Overcome"],
+                        "Betrayal": ["Act 1: Group unites", "Midpoint: Trust shatters", "Climax: Deal with foe"],
+                        "Isolation": ["Act 1: City alone", "Midpoint: Survivors met", "Climax: Rejoin world"],
+                        "Sacrifice": ["Act 1: Save others", "Midpoint: Tough call", "Climax: Give life"]
+                    },
+                    "Cursed Object": {
+                        "Greed": ["Act 1: Find artifact", "Midpoint: Curse grows", "Climax: Destroy it"],
+                        "Denial": ["Act 1: Gift accepted", "Midpoint: Odd events", "Climax: Face truth"],
+                        "Obsession": ["Act 1: Study item", "Midpoint: Mind slips", "Climax: Break free"],
+                        "Guilt": ["Act 1: Steal object", "Midpoint: Haunting starts", "Climax: Atone"],
+                        "Fear": ["Act 1: Object whispers", "Midpoint: Terror rises", "Climax: Conquer it"]
+                    },
+                    "Demon Pact": {
+                        "Despair": ["Act 1: Make deal", "Midpoint: Soul at risk", "Climax: Lose all"],
+                        "Ambition": ["Act 1: Seek power", "Midpoint: Demon tricks", "Climax: Outwit"],
+                        "Love": ["Act 1: Save loved one", "Midpoint: Pact twists", "Climax: Sacrifice"],
+                        "Regret": ["Act 1: Deal struck", "Midpoint: Past haunts", "Climax: Undo it"],
+                        "Pride": ["Act 1: Defy warnings", "Midpoint: Demon wins", "Climax: Humble end"]
+                    },
+                    "Witch Hunt": {
+                        "Paranoia": ["Act 1: Village panic", "Midpoint: Accused", "Climax: Prove innocence"],
+                        "Justice": ["Act 1: Hunt begins", "Midpoint: Witch found", "Climax: Fair trial"],
+                        "Betrayal": ["Act 1: Friend turns", "Midpoint: Lies spread", "Climax: Confront"],
+                        "Fear": ["Act 1: Signs appear", "Midpoint: Mob forms", "Climax: Escape"],
+                        "Compassion": ["Act 1: Hide accused", "Midpoint: Truth out", "Climax: Save them"]
+                    }
+                }
+            },
+            "Romance": {
+                conflicts: {
+                    "Fake Relationship": {
+                        "Pride": ["Act 1: Pretend love", "Midpoint: Jealousy hits", "Climax: Confess"],
+                        "Fear": ["Act 1: Hide truth", "Midpoint: Partner commits", "Climax: Come out"],
+                        "Ambition": ["Act 1: Fame deal", "Midpoint: Real love", "Climax: Love or career"],
+                        "Insecurity": ["Act 1: Perfect match", "Midpoint: Flaws show", "Climax: Accept"],
+                        "Loyalty": ["Act 1: Trick ex", "Midpoint: Ex returns", "Climax: Choose new"]
+                    },
+                    "Office Romance": {
+                        "Secrecy": ["Act 1: Work sparks", "Midpoint: Hide love", "Climax: Go public"],
+                        "Competition": ["Act 1: Rivals flirt", "Midpoint: Love vs job", "Climax: Pick love"],
+                        "Misunderstandings": ["Act 1: Signals cross", "Midpoint: Fight erupts", "Climax: Fix it"],
+                        "Past": ["Act 1: Ex reappears", "Midpoint: Old flames", "Climax: Move on"],
+                        "Jealousy": ["Act 1: Office flirt", "Midpoint: Rift grows", "Climax: Recommit"]
+                    },
+                    "Forbidden Love": {
+                        "Duty": ["Act 1: Love banned", "Midpoint: Duty calls", "Climax: Defy all"],
+                        "Fear": ["Act 1: Secret meet", "Midpoint: Caught", "Climax: Run away"],
+                        "Pride": ["Act 1: Deny feelings", "Midpoint: Passion wins", "Climax: Admit love"],
+                        "Sacrifice": ["Act 1: Love grows", "Midpoint: Risk all", "Climax: Give up"],
+                        "Hope": ["Act 1: Stolen glances", "Midpoint: Plan escape", "Climax: Freedom"]
+                    },
+                    "Second Chance": {
+                        "Regret": ["Act 1: Ex returns", "Midpoint: Past hurts", "Climax: Forgive"],
+                        "Trust": ["Act 1: Meet again", "Midpoint: Doubt lingers", "Climax: Rebuild"],
+                        "Fear": ["Act 1: Old flame", "Midpoint: Pain recalls", "Climax: Try again"],
+                        "Pride": ["Act 1: Deny spark", "Midpoint: Walls crack", "Climax: Reunite"],
+                        "Love": ["Act 1: Chance meet", "Midpoint: Feelings bloom", "Climax: Forever"]
+                    },
+                    "Love Triangle": {
+                        "Jealousy": ["Act 1: Two suitors", "Midpoint: Tensions rise", "Climax: Choose"],
+                        "Insecurity": ["Act 1: Doubt worth", "Midpoint: Rivals shine", "Climax: Self-love"],
+                        "Deception": ["Act 1: Hide feelings", "Midpoint: Lies out", "Climax: Truth wins"],
+                        "Loyalty": ["Act 1: Friend loves", "Midpoint: Heart splits", "Climax: Pick one"],
+                        "Passion": ["Act 1: Sparks fly", "Midpoint: Chaos grows", "Climax: Bold move"]
+                    }
+                }
+            }
+        };
+
+        // Definitions
+        const storyDefinitions = {
+            "Protagonist": {
+                def: "The main character who drives the story—like the hero (or anti-hero) you root for!",
+                example: "In a Sci-Fi tale, the protagonist might be a paranoid engineer battling an AI rebellion."
+            },
+            "Antagonist": {
+                def: "The big baddie or force opposing the protagonist—could be a person, creature, or even fate!",
+                example: "Think of a Fantasy dragon sieging a village, making life tough for our ambitious knight."
+            },
+            "Conflict": {
+                def: "The juicy problem or struggle that keeps the story spicy—without it, there’s no drama!",
+                example: "In a Mystery, the conflict could be an art heist with greed pushing the stakes higher."
+            },
+            "Climax": {
+                def: "The most intense, do-or-die moment where everything hits the fan—peak excitement!",
+                example: "In Horror, it’s when the fearful night guard faces their trauma in a haunted asylum."
+            },
+            "Plot": {
+                def: "The sequence of events that make up the story—basically, what happens and why!",
+                example: "A Romance plot might follow a fake relationship turning real, with pride in the mix."
+            },
+            "Setting": {
+                def: "Where and when the story happens—sets the vibe and grounds the action!",
+                example: "A Sci-Fi setting could be a time-warped spaceship, twisting reality for our curious hero."
+            },
+            "Theme": {
+                def: "The big idea or message lurking beneath the story—what it’s *really* about!",
+                example: "In a Fantasy royal betrayal, the theme might be loyalty tested by love."
+            }
+        };
+
+        // Combined Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            // Plotline Architect
+            const genreSelect = document.getElementById('genre');
+            const conflictSelect = document.getElementById('conflict');
+            const flawSelect = document.getElementById('flaw');
+            const generateBtn = document.getElementById('generateBtn');
+            const randomBtn = document.getElementById('randomBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const outputDiv = document.getElementById('output');
+
+            genreSelect.addEventListener('change', () => {
+                const genre = genreSelect.value;
+                conflictSelect.innerHTML = '<option value="">Choose Conflict</option>';
+                flawSelect.innerHTML = '<option value="">Choose Flaw</option>';
+                outputDiv.innerHTML = '';
+                if (genre && plotLibrary[genre]) {
+                    const conflicts = Object.keys(plotLibrary[genre].conflicts);
+                    conflicts.forEach(conflict => conflictSelect.add(new Option(conflict, conflict)));
+                }
+            });
+
+            conflictSelect.addEventListener('change', () => {
+                const genre = genreSelect.value;
+                const conflict = conflictSelect.value;
+                flawSelect.innerHTML = '<option value="">Choose Flaw</option>';
+                outputDiv.innerHTML = '';
+                if (genre && conflict && plotLibrary[genre]?.conflicts[conflict]) {
+                    const flaws = Object.keys(plotLibrary[genre].conflicts[conflict]);
+                    flaws.forEach(flaw => flawSelect.add(new Option(flaw, flaw)));
+                }
+            });
+
+            generateBtn.addEventListener('click', () => {
+                const genre = genreSelect.value;
+                const conflict = conflictSelect.value;
+                const flaw = flawSelect.value;
+                outputDiv.innerHTML = '';
+                if (!genre || !conflict || !flaw) {
+                    outputDiv.innerHTML = '<p style="color: #ff6b6b">⚠️ Pick all three, you creative genius!</p>';
+                    return;
+                }
+                const plot = plotLibrary[genre]?.conflicts[conflict]?.[flaw];
+                if (plot) {
+                    outputDiv.innerHTML = `
+                        <h2>${genre}: ${conflict}</h2>
+                        <p>A ${flaw.toLowerCase()} protagonist ${plot[0].split(': ')[1].toLowerCase()}. 
+                        Things get wild when ${plot[1].split(': ')[1].toLowerCase()}. 
+                        In an epic showdown, ${plot[2].split(': ')[1].toLowerCase()}!</p>
+                    `;
+                    new Audio('https://www.myinstants.com/media/sounds/tada.mp3').play().catch(() => {});
+                } else {
+                    outputDiv.innerHTML = '<p>Oops, no plot for that combo yet!</p>';
+                }
+            });
+
+            randomBtn.addEventListener('click', () => {
+                const genres = Object.keys(plotLibrary);
+                const genre = genres[Math.floor(Math.random() * genres.length)];
+                genreSelect.value = genre;
+                const conflicts = Object.keys(plotLibrary[genre].conflicts);
+                const conflict = conflicts[Math.floor(Math.random() * conflicts.length)];
+                conflictSelect.innerHTML = '<option value="">Choose Conflict</option>';
+                conflicts.forEach(c => conflictSelect.add(new Option(c, c)));
+                conflictSelect.value = conflict;
+                const flaws = Object.keys(plotLibrary[genre].conflicts[conflict]);
+                const flaw = flaws[Math.floor(Math.random() * flaws.length)];
+                flawSelect.innerHTML = '<option value="">Choose Flaw</option>';
+                flaws.forEach(f => flawSelect.add(new Option(f, f)));
+                flawSelect.value = flaw;
+                generateBtn.click();
+            });
+
+            shareBtn.addEventListener('click', () => {
+                const genre = genreSelect.value;
+                const conflict = conflictSelect.value;
+                const flaw = flawSelect.value;
+                if (genre && conflict && flaw) {
+                    const text = `My wild plot from narrativemethods.com: ${genre} - ${conflict} (${flaw})! Try it at https://narrativemethods.com!`;
+                    navigator.clipboard.writeText(text);
+                    outputDiv.innerHTML += '<p style="color: #00cc00">✅ Copied to clipboard—share the madness!</p>';
+                } else {
+                    outputDiv.innerHTML += '<p style="color: #ff6b6b">⚠️ Generate a plot first!</p>';
+                }
+            });
+
+            // Plot Definition Tool
+            const termSelect = document.getElementById('term');
+            const defineBtn = document.getElementById('defineBtn');
+            const randomTermBtn = document.getElementById('randomTermBtn');
+            const definitionOutput = document.getElementById('definitionOutput');
+
+            defineBtn.addEventListener('click', () => {
+                const term = termSelect.value;
+                if (term && storyDefinitions[term]) {
+                    definitionOutput.innerHTML = `
+                        <h3>${term}</h3>
+                        <p><strong>What it is:</strong> ${storyDefinitions[term].def}</p>
+                        <p><strong>Example:</strong> ${storyDefinitions[term].example}</p>
+                        <p><a href="#" onclick="document.getElementById('genre').focus(); return false;">Try it in the Plotline Architect!</a></p>
+                    `;
+                } else {
+                    definitionOutput.innerHTML = '<p style="color: #ff6b6b">⚠️ Pick a term first, story wizard!</p>';
+                }
+            });
+
+            randomTermBtn.addEventListener('click', () => {
+                const terms = Object.keys(storyDefinitions);
+                const randomTerm = terms[Math.floor(Math.random() * terms.length)];
+                termSelect.value = randomTerm;
+                defineBtn.click();
+            });
+        });
+    </script>
 </body>
 </html>
