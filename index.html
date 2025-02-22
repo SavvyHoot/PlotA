@@ -31,8 +31,27 @@
             <button id="shareBtn">📤 Share Plot</button>
         </div>
         <div id="output"></div>
+
+        <!-- Plot Definition Tool -->
+        <h2>🧠 Plot Definition Tool</h2>
+        <div class="definition-group">
+            <select id="term" title="Story Term">
+                <option value="">Pick a Term</option>
+                <option>Protagonist</option>
+                <option>Antagonist</option>
+                <option>Conflict</option>
+                <option>Climax</option>
+                <option>Plot</option>
+                <option>Setting</option>
+                <option>Theme</option>
+            </select>
+            <button id="defineBtn">📚 Define It!</button>
+            <button id="randomTermBtn">🎯 Random Term</button>
+        </div>
+        <div id="definitionOutput"></div>
     </div>
     <script src="plotlib.js"></script>
+    <script src="definitions.js"></script>
     <script src="logic.js"></script>
 </body>
 </html>
