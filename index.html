@@ -62,10 +62,10 @@
             width: 100%;
         }
         button {
-            padding: 10px 15px; /* Base for mobile */
+            padding: 10px 15px;
             font-size: clamp(0.9em, 3vw, 1.2em);
             border: none;
-            border-radius: 20px; /* Fatter, funkier corners */
+            border-radius: 20px;
             background: #00cc00;
             color: #fff;
             cursor: pointer;
@@ -76,7 +76,7 @@
         }
         button:hover {
             background: #ff6b6b;
-            transform: scale(1.1); /* Pop on hover */
+            transform: scale(1.1);
         }
         #output, #definitionOutput {
             background: #fff;
@@ -113,8 +113,8 @@
                 max-width: 250px;
             }
             button {
-                padding: 12px 20px; /* Fatter on desktop */
-                max-width: 220px; /* Wider */
+                padding: 12px 20px;
+                max-width: 220px;
             }
             .container {
                 padding: 20px;
@@ -396,6 +396,40 @@
             }
         };
 
+        // Enhanced plot details
+        const plotEnhancers = {
+            "Sci-Fi": {
+                characters: ["Jax, a rogue engineer", "Dr. Vex, a quirky scientist", "Captain Zara, a grizzled commander"],
+                settings: ["aboard the starship Nexus", "on the desert planet Xylos", "in a crumbling orbital station"],
+                twists: ["a glitchy lie threatens all", "an alien signal hijacks the tech", "a time rift scrambles reality"],
+                prompts: ["What’s the AI hiding?", "Who sent the signal?", "Can they escape the loop?"]
+            },
+            "Fantasy": {
+                characters: ["Sir Kael, a reluctant knight", "Elara, a cunning mage", "King Torin, a haunted ruler"],
+                settings: ["in the shadowed realm of Drakon", "beneath the Whispering Woods", "atop the Crystal Peaks"],
+                twists: ["a curse binds their fate", "a traitor wears a crown", "an ancient pact awakens"],
+                prompts: ["What’s the dragon’s secret?", "Who’s the real enemy?", "Can the prophecy be undone?"]
+            },
+            "Mystery": {
+                characters: ["Detective Rune, a sharp skeptic", "Clara, a nosy journalist", "Mr. Grey, a shady collector"],
+                settings: ["in the foggy streets of Oldtown", "inside a dusty mansion", "at a bustling art gala"],
+                twists: ["a clue points to kin", "the theft hides a murder", "a lie unravels the past"],
+                prompts: ["Who’s the insider?", "What’s in the vault?", "Why frame the innocent?"]
+            },
+            "Horror": {
+                characters: ["Lila, a jittery guard", "Evan, a ghost-obsessed blogger", "Sister Mara, a grim nun"],
+                settings: ["in the decaying Blackwood Asylum", "beneath a cursed swamp", "within a silent village"],
+                twists: ["a voice names their sins", "the dead want company", "a pact fuels the terror"],
+                prompts: ["What haunts the halls?", "Who’s next to vanish?", "Can they break the curse?"]
+            },
+            "Romance": {
+                characters: ["Avery, a proud actor", "Sam, a shy barista", "Lady Elise, a defiant heiress"],
+                settings: ["in a bustling city café", "at a lavish masked ball", "on a stormy coastal estate"],
+                twists: ["a rival stirs jealousy", "a secret threatens all", "love defies the rules"],
+                prompts: ["What’s the ex hiding?", "Can they trust again?", "Who wins their heart?"]
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             const genreSelect = document.getElementById('genre');
             const conflictSelect = document.getElementById('conflict');
@@ -438,11 +472,17 @@
                 }
                 const plot = plotLibrary[genre]?.conflicts[conflict]?.[flaw];
                 if (plot) {
+                    const enhancer = plotEnhancers[genre];
+                    const char = enhancer.characters[Math.floor(Math.random() * enhancer.characters.length)];
+                    const setting = enhancer.settings[Math.floor(Math.random() * enhancer.settings.length)];
+                    const twist = enhancer.twists[Math.floor(Math.random() * enhancer.twists.length)];
+                    const prompt = enhancer.prompts[Math.floor(Math.random() * enhancer.prompts.length)];
                     outputDiv.innerHTML = `
                         <h2>${genre}: ${conflict}</h2>
-                        <p>A ${flaw.toLowerCase()} protagonist ${plot[0].split(': ')[1].toLowerCase()}. 
-                        Things get wild when ${plot[1].split(': ')[1].toLowerCase()}. 
-                        In an epic showdown, ${plot[2].split(': ')[1].toLowerCase()}!</p>
+                        <p>Meet ${char}, a ${flaw.toLowerCase()} soul ${plot[0].split(': ')[1].toLowerCase()} ${setting}. 
+                        Tensions flare when ${plot[1].split(': ')[1].toLowerCase()}—${twist}. 
+                        In a wild showdown, ${plot[2].split(': ')[1].toLowerCase()}! 
+                        <em>Next Step:</em> ${prompt}</p>
                     `;
                     new Audio('https://www.myinstants.com/media/sounds/tada.mp3').play().catch(() => {});
                 } else {
