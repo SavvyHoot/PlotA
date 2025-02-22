@@ -32,7 +32,7 @@
             margin: 20px 0;
             text-shadow: 1px 1px #ff6b6b;
         }
-        .dropdown-group, .definition-group {
+        .dropdown-group, .definition-group, .button-group, .slider-group {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -41,7 +41,7 @@
             width: 100%;
             visibility: visible !important;
         }
-        select {
+        select, input[type="range"] {
             padding: 8px;
             font-size: clamp(0.9em, 3vw, 1.2em);
             border: 3px solid #ff6b6b;
@@ -52,14 +52,6 @@
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
-        }
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            margin: 15px 0;
-            width: 100%;
         }
         button {
             padding: 10px 15px;
@@ -78,7 +70,7 @@
             background: #ff6b6b;
             transform: scale(1.1);
         }
-        #output, #definitionOutput {
+        #output, #definitionOutput, #charOutput, #sceneOutput, #dialogueOutput, #titleOutput {
             background: #fff;
             color: #1a1a3d;
             padding: 15px;
@@ -90,12 +82,12 @@
             box-sizing: border-box;
             visibility: visible !important;
         }
-        #output h2, #definitionOutput h3 {
+        #output h2, #definitionOutput h3, #charOutput h3, #sceneOutput h3, #dialogueOutput h3, #titleOutput h3 {
             color: #ffcc00;
             margin: 10px 0;
             font-size: clamp(1.1em, 3.5vw, 1.5em);
         }
-        #output p, #definitionOutput p {
+        #output p, #definitionOutput p, #charOutput p, #sceneOutput p, #dialogueOutput p, #titleOutput p {
             line-height: 1.5;
             margin: 5px 0;
         }
@@ -104,11 +96,11 @@
             text-decoration: underline;
         }
         @media (min-width: 600px) {
-            .dropdown-group, .definition-group, .button-group {
+            .dropdown-group, .definition-group, .button-group, .slider-group {
                 flex-direction: row;
                 justify-content: center;
             }
-            select {
+            select, input[type="range"] {
                 width: auto;
                 max-width: 250px;
             }
@@ -147,6 +139,32 @@
             <button id="shareBtn">📤 Share Plot</button>
         </div>
         <div id="output"></div>
+
+        <h2>🎭 Character Crafter</h2>
+        <div class="button-group">
+            <button id="charBtn">🎨 Spin a Character!</button>
+            <button id="funkifyBtn">🌟 Funkify It!</button>
+        </div>
+        <div id="charOutput"></div>
+
+        <h2>🎬 Scene Starter</h2>
+        <div class="button-group">
+            <button id="sceneBtn">🎥 Kick It Off!</button>
+        </div>
+        <div id="sceneOutput"></div>
+
+        <h2>💬 Dialogue Dazzler</h2>
+        <div class="slider-group">
+            <input type="range" id="moodSlider" min="0" max="4" value="2" title="Mood: 0-Gruff, 1-Tense, 2-Casual, 3-Flirty, 4-Sassy">
+            <button id="dialogueBtn">🗣️ Say Something!</button>
+        </div>
+        <div id="dialogueOutput"></div>
+
+        <h2>📚 Title Tickler</h2>
+        <div class="button-group">
+            <button id="titleBtn">✍️ Tickle a Title!</button>
+        </div>
+        <div id="titleOutput"></div>
 
         <h2>🧠 Plot Definition Tool</h2>
         <div class="definition-group">
@@ -467,6 +485,100 @@
             ]
         };
 
+        const characterTraits = {
+            "Sci-Fi": {
+                roles: ["engineer", "pilot", "scientist", "soldier", "hacker"],
+                quirks: ["obsessed with old Earth tunes", "talks to tech like friends", "wears a glitchy eyepatch", "carries a lucky bolt", "hums under stress"],
+                backstories: ["escaped a lab experiment", "lost a crew to a black hole", "hides a banned invention", "seeks a lost signal", "born on a dying ship"]
+            },
+            "Fantasy": {
+                roles: ["knight", "mage", "thief", "princess", "bard"],
+                quirks: ["sings to their sword", "collects glowing stones", "fears mirrors", "dances in the rain", "whispers to the wind"],
+                backstories: ["cursed by a witch", "fled a burning kingdom", "stole from a dragon", "heard a prophecy in a dream", "raised by wolves"]
+            },
+            "Mystery": {
+                roles: ["detective", "journalist", "thief", "curator", "witness"],
+                quirks: ["chews on pens", "wears mismatched socks", "sketches suspects", "trusts no one", "counts footsteps"],
+                backstories: ["solved a cold case", "lost a partner to crime", "hides a dark past", "owns a secret diary", "saw too much"]
+            },
+            "Horror": {
+                roles: ["guard", "blogger", "priest", "student", "survivor"],
+                quirks: ["jumps at shadows", "carries a broken watch", "prays in whispers", "draws creepy symbols", "sleeps with lights on"],
+                backstories: ["saw a ghost as a kid", "escaped a cult", "found a cursed book", "heard voices in the dark", "lost kin to the unknown"]
+            },
+            "Romance": {
+                roles: ["actor", "barista", "heiress", "writer", "musician"],
+                quirks: ["blushes at compliments", "collects old love letters", "sings off-key", "hides a tattoo", "loves stormy nights"],
+                backstories: ["ran from an arranged match", "lost a first love", "wrote a secret novel", "hides a famous past", "met fate in a crowd"]
+            }
+        };
+
+        const dialogueLines = {
+            "Sci-Fi": {
+                "Gruff": ["Get off my ship, tin can!", "I’ve seen worse glitches than you.", "Fix it or we’re space dust!"],
+                "Tense": ["The logs don’t lie—do they?", "We’ve got ten minutes, move!", "It’s watching us, I swear."],
+                "Casual": ["Eh, AI’s just cranky today.", "Wanna bet it’s aliens again?", "No biggie, just a warp glitch."],
+                "Flirty": ["Hey, AI, got a spark for me?", "You’re cuter than a starship, doc.", "Wanna dance in zero-G?"],
+                "Sassy": ["Oh, great, the AI’s got attitude now.", "Fix your own mess, metalhead!", "Yeah, I’m the boss, not you."]
+            },
+            "Fantasy": {
+                "Gruff": ["Move, or the dragon eats you!", "I’ve slain worse than this.", "Keep your magic to yourself!"],
+                "Tense": ["The prophecy’s real—I feel it!", "One wrong step, we’re cursed.", "It’s awake—run!"],
+                "Casual": ["Just another dragon, huh?", "Wanna sword-fight later?", "Eh, the curse’ll wear off."],
+                "Flirty": ["Your magic’s kinda hot, mage.", "Steal my heart, not the gold!", "Dance with me under the moons?"],
+                "Sassy": ["Oh, please, your crown’s crooked.", "I’d slay you, but I’m busy.", "Nice spell—try harder next time."]
+            },
+            "Mystery": {
+                "Gruff": ["Spill it, or I walk!", "I’ve cracked tougher cases.", "Hands off my clues!"],
+                "Tense": ["The killer’s here—watch it!", "One slip, we’re done.", "That shadow moved!"],
+                "Casual": ["Eh, just another heist.", "Wanna guess the perp?", "Clues’ll turn up, chill."],
+                "Flirty": ["You’re my best clue, babe.", "Solve this with me, cutie?", "Got a secret for me?"],
+                "Sassy": ["Oh, you’re the mastermind? Cute.", "Keep up, rookie!", "Nice try hiding that clue."]
+            },
+            "Horror": {
+                "Gruff": ["Shut up and run!", "I’ve faced worse nightmares.", "Stay back, freak!"],
+                "Tense": ["It’s behind us—don’t look!", "The lights flickered again!", "We’re not alone—hear that?"],
+                "Casual": ["Just ghosts, no biggie.", "Wanna bet it’s cursed?", "Eh, I’ve seen creepier."],
+                "Flirty": ["Scared? Hold my hand.", "You’re spookier than this place.", "Let’s haunt together?"],
+                "Sassy": ["Oh, boo-hoo, a ghost!", "Nice try, creepy—I’m out.", "What, no jump-scare?"]
+            },
+            "Romance": {
+                "Gruff": ["Love’s a mess—deal with it!", "I’m not good at this, okay?", "Stop staring already!"],
+                "Tense": ["If they see us, it’s over!", "One kiss, then we’re done.", "Heart’s racing—yours?"],
+                "Casual": ["Wanna grab coffee later?", "Love’s cool, I guess.", "You’re kinda cute, huh?"],
+                "Flirty": ["Eyes like yours? Trouble.", "Steal my heart, thief!", "Dance closer, darling."],
+                "Sassy": ["Oh, you’re charming? Prove it.", "I’m not swooning yet!", "Nice line—next!"]
+            }
+        };
+
+        const titleWords = {
+            "Sci-Fi": {
+                prefixes: ["Quantum", "Galactic", "Neon", "Silent", "Echo"],
+                nouns: ["Void", "Nexus", "Plague", "Signal", "Warp"],
+                suffixes: ["of Xylos", "Unraveled", "in Flux", "Reborn", "Betrayed"]
+            },
+            "Fantasy": {
+                prefixes: ["Cursed", "Golden", "Shadow", "Mystic", "Eternal"],
+                nouns: ["Realm", "Dragon", "Crown", "Quest", "Prophecy"],
+                suffixes: ["of Drakon", "Unveiled", "in Chains", "Awakened", "Lost"]
+            },
+            "Mystery": {
+                prefixes: ["Hidden", "Foggy", "Dark", "Twisted", "Secret"],
+                nouns: ["Heist", "Murder", "Clue", "Case", "Shadow"],
+                suffixes: ["of Oldtown", "Uncovered", "in Silence", "Revealed", "Gone"]
+            },
+            "Horror": {
+                prefixes: ["Haunted", "Grim", "Silent", "Cursed", "Wicked"],
+                nouns: ["Asylum", "Swamp", "Night", "Pact", "Echo"],
+                suffixes: ["of Blackwood", "Unleashed", "in Darkness", "Alive", "Trapped"]
+            },
+            "Romance": {
+                prefixes: ["Stolen", "Forbidden", "Wild", "Tender", "Fated"],
+                nouns: ["Heart", "Dance", "Love", "Vow", "Storm"],
+                suffixes: ["of the City", "Unraveled", "in Bloom", "Rekindled", "Broken"]
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             const genreSelect = document.getElementById('genre');
             const conflictSelect = document.getElementById('conflict');
@@ -476,6 +588,26 @@
             const shareBtn = document.getElementById('shareBtn');
             const outputDiv = document.getElementById('output');
 
+            const charBtn = document.getElementById('charBtn');
+            const funkifyBtn = document.getElementById('funkifyBtn');
+            const charOutput = document.getElementById('charOutput');
+
+            const sceneBtn = document.getElementById('sceneBtn');
+            const sceneOutput = document.getElementById('sceneOutput');
+
+            const moodSlider = document.getElementById('moodSlider');
+            const dialogueBtn = document.getElementById('dialogueBtn');
+            const dialogueOutput = document.getElementById('dialogueOutput');
+
+            const titleBtn = document.getElementById('titleBtn');
+            const titleOutput = document.getElementById('titleOutput');
+
+            const termSelect = document.getElementById('term');
+            const defineBtn = document.getElementById('defineBtn');
+            const randomTermBtn = document.getElementById('randomTermBtn');
+            const definitionOutput = document.getElementById('definitionOutput');
+
+            // Plotline Architect
             genreSelect.addEventListener('change', () => {
                 const genre = genreSelect.value;
                 conflictSelect.innerHTML = '<option value="">Choose Conflict</option>';
@@ -559,11 +691,93 @@
                 }
             });
 
-            const termSelect = document.getElementById('term');
-            const defineBtn = document.getElementById('defineBtn');
-            const randomTermBtn = document.getElementById('randomTermBtn');
-            const definitionOutput = document.getElementById('definitionOutput');
+            // Character Crafter
+            let lastChar = null;
+            charBtn.addEventListener('click', () => {
+                const genre = genreSelect.value || Object.keys(plotLibrary)[Math.floor(Math.random() * 5)];
+                const traits = characterTraits[genre];
+                const role = traits.roles[Math.floor(Math.random() * traits.roles.length)];
+                const quirk = traits.quirks[Math.floor(Math.random() * traits.quirks.length)];
+                const backstory = traits.backstories[Math.floor(Math.random() * traits.backstories.length)];
+                const names = plotEnhancers[genre].characters.map(c => c.split(',')[0]);
+                const name = names[Math.floor(Math.random() * names.length)];
+                lastChar = { name, role, quirk, backstory };
+                charOutput.innerHTML = `
+                    <h3>${name}, the ${role}</h3>
+                    <p><strong>Quirk:</strong> ${quirk}</p>
+                    <p><strong>Backstory:</strong> ${backstory}</p>
+                `;
+                new Audio('https://www.myinstants.com/media/sounds/tada.mp3').play().catch(() => {});
+            });
 
+            funkifyBtn.addEventListener('click', () => {
+                if (!lastChar) {
+                    charOutput.innerHTML = '<p style="color: #ff6b6b">⚠️ Spin a character first, funky friend!</p>';
+                    return;
+                }
+                const funkyQuirks = ["loves disco dancing", "talks to invisible pets", "wears glitter boots", "sings off-key lullabies", "collects cosmic socks"];
+                const funkyTwist = funkyQuirks[Math.floor(Math.random() * funkyQuirks.length)];
+                lastChar.quirk = funkyTwist;
+                charOutput.innerHTML = `
+                    <h3>${lastChar.name}, the ${lastChar.role}</h3>
+                    <p><strong>Quirk:</strong> ${lastChar.quirk} ✨</p>
+                    <p><strong>Backstory:</strong> ${lastChar.backstory}</p>
+                `;
+                new Audio('https://www.myinstants.com/media/sounds/tada.mp3').play().catch(() => {});
+            });
+
+            // Scene Starter
+            sceneBtn.addEventListener('click', () => {
+                const genre = genreSelect.value;
+                const conflict = conflictSelect.value;
+                const flaw = flawSelect.value;
+                if (!genre || !conflict || !flaw) {
+                    sceneOutput.innerHTML = '<p style="color: #ff6b6b">⚠️ Generate a plot first, story spinner!</p>';
+                    return;
+                }
+                const plot = plotLibrary[genre]?.conflicts[conflict]?.[flaw];
+                const enhancer = plotEnhancers[genre];
+                const char = enhancer.characters[Math.floor(Math.random() * enhancer.characters.length)];
+                const setting = enhancer.settings[Math.floor(Math.random() * enhancer.settings.length)];
+                const twist = enhancer.twists[Math.floor(Math.random() * enhancer.twists.length)];
+                sceneOutput.innerHTML = `
+                    <h3>Opening Scene</h3>
+                    <p>${char.split(',')[0]} ${plot[0].split(': ')[1].toLowerCase()} ${setting}, heart pounding as the air thickens with ${flaw.toLowerCase()}. 
+                    The moment shifts—${plot[1].split(': ')[1].toLowerCase()}, and ${twist}. 
+                    “This can’t be real,” they mutter, but the truth’s already clawing closer.</p>
+                `;
+                new Audio('https://www.myinstants.com/media/sounds/typewriter.mp3').play().catch(() => {});
+            });
+
+            // Dialogue Dazzler
+            dialogueBtn.addEventListener('click', () => {
+                const genre = genreSelect.value || Object.keys(plotLibrary)[Math.floor(Math.random() * 5)];
+                const flaw = flawSelect.value || "mystery";
+                const mood = ["Gruff", "Tense", "Casual", "Flirty", "Sassy"][moodSlider.value];
+                const lines = dialogueLines[genre][mood];
+                const line = lines[Math.floor(Math.random() * lines.length)];
+                dialogueOutput.innerHTML = `
+                    <h3>${mood} Dialogue</h3>
+                    <p>“${line}” — ${flaw ? `A ${flaw.toLowerCase()} soul` : 'Someone'}</p>
+                `;
+                new Audio('https://www.myinstants.com/media/sounds/tada.mp3').play().catch(() => {});
+            });
+
+            // Title Tickler
+            titleBtn.addEventListener('click', () => {
+                const genre = genreSelect.value || Object.keys(plotLibrary)[Math.floor(Math.random() * 5)];
+                const words = titleWords[genre];
+                const prefix = words.prefixes[Math.floor(Math.random() * words.prefixes.length)];
+                const noun = words.nouns[Math.floor(Math.random() * words.nouns.length)];
+                const suffix = words.suffixes[Math.floor(Math.random() * words.suffixes.length)];
+                titleOutput.innerHTML = `
+                    <h3>Your Funky Title</h3>
+                    <p><strong>${prefix} ${noun} ${suffix}</strong></p>
+                `;
+                new Audio('https://www.myinstants.com/media/sounds/tada.mp3').play().catch(() => {});
+            });
+
+            // Plot Definition Tool
             defineBtn.addEventListener('click', () => {
                 const term = termSelect.value;
                 if (term && storyDefinitions[term]) {
