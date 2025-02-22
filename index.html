@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plotline Architect</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>📖 Plotline Architect</h1>
+        <h1>📖 Plotline Architect: Unleash Your Story!</h1>
         <div class="dropdown-group">
             <select id="genre" title="Genre">
                 <option value="">Choose Genre</option>
@@ -25,10 +25,13 @@
                 <option value="">Choose Flaw</option>
             </select>
         </div>
-        <button id="generateBtn">✨ Generate Story Outline</button>
+        <div class="button-group">
+            <button id="generateBtn">✨ Generate Story Outline</button>
+            <button id="randomBtn">🎲 Surprise Me!</button>
+            <button id="shareBtn">📤 Share Plot</button>
+        </div>
         <div id="output"></div>
     </div>
-    <!-- Load JavaScript files -->
     <script src="plotlib.js"></script>
     <script src="logic.js"></script>
 </body>
