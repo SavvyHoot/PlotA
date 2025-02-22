@@ -396,7 +396,6 @@
             }
         };
 
-        // Enhanced plot details
         const plotEnhancers = {
             "Sci-Fi": {
                 characters: ["Jax, a rogue engineer", "Dr. Vex, a quirky scientist", "Captain Zara, a grizzled commander"],
@@ -428,6 +427,44 @@
                 twists: ["a rival stirs jealousy", "a secret threatens all", "love defies the rules"],
                 prompts: ["What’s the ex hiding?", "Can they trust again?", "Who wins their heart?"]
             }
+        };
+
+        const plotTwists = {
+            "Sci-Fi": [
+                "But then, the AI reveals it’s your long-lost sibling!",
+                "Suddenly, a wormhole spits out a rival ship!",
+                "Wait—the plague’s a simulation gone rogue!",
+                "Shockingly, the crew’s all androids!",
+                "Oh no—the planet’s core is about to blow!"
+            ],
+            "Fantasy": [
+                "Suddenly, the dragon’s hoard is a portal to another realm!",
+                "But the king’s a doppelgänger in disguise!",
+                "Behold—the relic starts whispering secrets!",
+                "Wait—the prophecy was forged by a foe!",
+                "Oh snap—the forest comes alive with vengeance!"
+            ],
+            "Mystery": [
+                "But then, the victim’s alive and pulling strings!",
+                "Suddenly, the painting hides a coded map!",
+                "Wait—the killer’s been dead for years!",
+                "Shockingly, the detective’s the prime suspect!",
+                "Oh no—the clue’s a red herring from the start!"
+            ],
+            "Horror": [
+                "But then, the asylum mirrors your nightmares!",
+                "Suddenly, the zombies are your old friends!",
+                "Wait—the object’s alive and hunting you!",
+                "Shockingly, the demon’s been you all along!",
+                "Oh no—the village is a trap for souls!"
+            ],
+            "Romance": [
+                "But then, the ex crashes the wedding with proof!",
+                "Suddenly, a letter reveals a hidden past!",
+                "Wait—the rival’s been in love all along!",
+                "Shockingly, the fling’s a royal in disguise!",
+                "Oh no—the storm uncovers a buried vow!"
+            ]
         };
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -477,11 +514,13 @@
                     const setting = enhancer.settings[Math.floor(Math.random() * enhancer.settings.length)];
                     const twist = enhancer.twists[Math.floor(Math.random() * enhancer.twists.length)];
                     const prompt = enhancer.prompts[Math.floor(Math.random() * enhancer.prompts.length)];
+                    const wildTwist = plotTwists[genre][Math.floor(Math.random() * plotTwists[genre].length)];
                     outputDiv.innerHTML = `
                         <h2>${genre}: ${conflict}</h2>
                         <p>Meet ${char}, a ${flaw.toLowerCase()} soul ${plot[0].split(': ')[1].toLowerCase()} ${setting}. 
                         Tensions flare when ${plot[1].split(': ')[1].toLowerCase()}—${twist}. 
                         In a wild showdown, ${plot[2].split(': ')[1].toLowerCase()}! 
+                        <strong>${wildTwist}</strong> 
                         <em>Next Step:</em> ${prompt}</p>
                     `;
                     new Audio('https://www.myinstants.com/media/sounds/tada.mp3').play().catch(() => {});
