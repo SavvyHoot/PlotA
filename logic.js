@@ -4,38 +4,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const conflictSelect = document.getElementById('conflict');
     const flawSelect = document.getElementById('flaw');
     const generateBtn = document.getElementById('generateBtn');
+    const randomBtn = document.getElementById('randomBtn');
+    const shareBtn = document.getElementById('shareBtn');
     const outputDiv = document.getElementById('output');
 
-    console.log('DOM fully loaded and parsed');
+    console.log('DOM loaded, ready to roll!');
 
-    // Verify if plotLibrary is loaded
-    console.log('plotLibrary:', plotLibrary);
-
-    // Clear and populate conflicts when genre changes
+    // Populate conflicts when genre changes
     genreSelect.addEventListener('change', () => {
         const genre = genreSelect.value;
-        console.log('Genre selected:', genre);
+        console.log('Genre picked:', genre);
 
-        // Reset conflicts and flaws
         conflictSelect.innerHTML = '<option value="">Choose Conflict</option>';
         flawSelect.innerHTML = '<option value="">Choose Flaw</option>';
         outputDiv.innerHTML = '';
 
-        // Additional check for plotLibrary[genre]
         if (genre && plotLibrary[genre]) {
-            // Confirm accessing plotLibrary[genre]
-            console.log('Accessing plotLibrary[genre]:', plotLibrary[genre]);
-
-            // Populate conflicts
             const conflicts = Object.keys(plotLibrary[genre].conflicts);
-            console.log('Conflicts available for', genre, ':', conflicts);
-            console.log('Total conflicts for', genre, ':', conflicts.length);
-            conflicts.forEach(conflict => {
-                console.log('Adding conflict option:', conflict);
-                conflictSelect.add(new Option(conflict, conflict));
-            });
-        } else {
-            console.log('No conflicts found for genre:', genre);
+            console.log('Conflicts for', genre, ':', conflicts);
+            conflicts.forEach(conflict => conflictSelect.add(new Option(conflict, conflict)));
         }
     });
 
@@ -43,22 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
     conflictSelect.addEventListener('change', () => {
         const genre = genreSelect.value;
         const conflict = conflictSelect.value;
-        console.log('Conflict selected:', conflict);
+        console.log('Conflict picked:', conflict);
 
-        // Reset flaws
         flawSelect.innerHTML = '<option value="">Choose Flaw</option>';
         outputDiv.innerHTML = '';
 
         if (genre && conflict && plotLibrary[genre]?.conflicts[conflict]) {
-            // Populate flaws
             const flaws = Object.keys(plotLibrary[genre].conflicts[conflict]);
-            console.log('Flaws available for', conflict, ':', flaws);
-            flaws.forEach(flaw => {
-                console.log('Adding flaw option:', flaw);
-                flawSelect.add(new Option(flaw, flaw));
-            });
-        } else {
-            console.log('No flaws found for conflict:', conflict);
+            console.log('Flaws for', conflict, ':', flaws);
+            flaws.forEach(flaw => flawSelect.add(new Option(flaw, flaw)));
         }
     });
 
@@ -68,26 +48,63 @@ document.addEventListener('DOMContentLoaded', () => {
         const conflict = conflictSelect.value;
         const flaw = flawSelect.value;
 
-        console.log('Generate button clicked with selections - Genre:', genre, ', Conflict:', conflict, ', Flaw:', flaw);
+        console.log('Generating with:', genre, conflict, flaw);
 
-        outputDiv.innerHTML = ''; // Clear previous output
+        outputDiv.innerHTML = '';
 
         if (!genre || !conflict || !flaw) {
-            outputDiv.innerHTML = '<p style="color: #ff6b6b">⚠️ Please select all three options!</p>';
+            outputDiv.innerHTML = '<p style="color: #ff6b6b">⚠️ Pick all three, you creative genius!</p>';
             return;
         }
 
-        // Get plot beats
         const plot = plotLibrary[genre]?.conflicts[conflict]?.[flaw];
-        console.log('Plot beats for the selections:', plot);
-
         if (plot) {
             outputDiv.innerHTML = `
-                <h2>${genre} Outline: ${conflict} (${flaw})</h2>
-                <ul>${plot.map(beat => `<li>${beat}</li>`).join('')}</ul>
+                <h2>${genre}: ${conflict}</h2>
+                <p>A ${flaw.toLowerCase()} protagonist ${plot[0].split(': ')[1].toLowerCase()}. 
+                Things get wild when ${plot[1].split(': ')[1].toLowerCase()}. 
+                In an epic showdown, ${plot[2].split(': ')[1].toLowerCase()}!</p>
             `;
+            // Play a fun sound (optional, hosted externally or local)
+            new Audio('https://www.myinstants.com/media/sounds/tada.mp3').play().catch(() => console.log('Audio blocked'));
         } else {
-            outputDiv.innerHTML = '<p>No outline found for these selections.</p>';
+            outputDiv.innerHTML = '<p>Oops, no plot for that combo yet!</p>';
+        }
+    });
+
+    // Randomize everything
+    randomBtn.addEventListener('click', () => {
+        const genres = Object.keys(plotLibrary);
+        const genre = genres[Math.floor(Math.random() * genres.length)];
+        genreSelect.value = genre;
+
+        const conflicts = Object.keys(plotLibrary[genre].conflicts);
+        const conflict = conflicts[Math.floor(Math.random() * conflicts.length)];
+        conflictSelect.innerHTML = '<option value="">Choose Conflict</option>';
+        conflicts.forEach(c => conflictSelect.add(new Option(c, c)));
+        conflictSelect.value = conflict;
+
+        const flaws = Object.keys(plotLibrary[genre].conflicts[conflict]);
+        const flaw = flaws[Math.floor(Math.random() * flaws.length)];
+        flawSelect.innerHTML = '<option value="">Choose Flaw</option>';
+        flaws.forEach(f => flawSelect.add(new Option(f, f)));
+        flawSelect.value = flaw;
+
+        console.log('Randomized to:', genre, conflict, flaw);
+        generateBtn.click();
+    });
+
+    // Share the plot
+    shareBtn.addEventListener('click', () => {
+        const genre = genreSelect.value;
+        const conflict = conflictSelect.value;
+        const flaw = flawSelect.value;
+        if (genre && conflict && flaw) {
+            const text = `My wild plot from narrativemethods.com: ${genre} - ${conflict} (${flaw})! Try it out!`;
+            navigator.clipboard.writeText(text);
+            outputDiv.innerHTML += '<p style="color: #00cc00">✅ Copied to clipboard—share the madness!</p>';
+        } else {
+            outputDiv.innerHTML += '<p style="color: #ff6b6b">⚠️ Generate a plot first!</p>';
         }
     });
 });
