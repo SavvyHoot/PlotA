@@ -15,13 +15,13 @@
         }
         .container {
             width: 100%;
-            max-width: 900px; /* Wider for desktop */
+            max-width: 900px;
             margin: 0 auto;
             text-align: center;
             box-sizing: border-box;
         }
         h1 {
-            font-size: clamp(1.5em, 5vw, 2.5em); /* Bigger on desktop */
+            font-size: clamp(1.5em, 5vw, 2.5em);
             color: #ffcc00;
             text-shadow: 2px 2px #ff6b6b;
             margin: 15px 0;
@@ -62,20 +62,21 @@
             width: 100%;
         }
         button {
-            padding: 10px 15px;
+            padding: 10px 15px; /* Base for mobile */
             font-size: clamp(0.9em, 3vw, 1.2em);
             border: none;
-            border-radius: 15px;
+            border-radius: 20px; /* Fatter, funkier corners */
             background: #00cc00;
             color: #fff;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
             width: 100%;
             max-width: 180px;
             box-sizing: border-box;
         }
         button:hover {
             background: #ff6b6b;
+            transform: scale(1.1); /* Pop on hover */
         }
         #output, #definitionOutput {
             background: #fff;
@@ -109,11 +110,11 @@
             }
             select {
                 width: auto;
-                max-width: 250px; /* Wider on desktop */
+                max-width: 250px;
             }
             button {
-                width: auto;
-                max-width: 200px;
+                padding: 12px 20px; /* Fatter on desktop */
+                max-width: 220px; /* Wider */
             }
             .container {
                 padding: 20px;
